@@ -15,10 +15,10 @@ public class SayiUretme {
         scanner.close();
 
         int randomSayi;  // o anlık üretilecek random sayımız
-        int minDeger;
-        int maxDeger;
+        int minDeger = 1;
+        int maxDeger = 100;
         int puan = sayiAdedi * hedefOrt; // sayıların olması gerekn toplam değeri
-        int azamUstPuanSiniri = sayiAdedi * 100;
+        int sayilarinToplami = 0;
 
         System.out.println("ORTLAMA : " + hedefOrt);
         System.out.println("Sayı Adedi : " + sayiAdedi);
@@ -27,26 +27,30 @@ public class SayiUretme {
             for (int i = 0; i < sayiAdedi; i++) {
                 System.out.print(hedefOrt + " ");
             }
+            System.out.println("TOPLAM : " + (puan));
             return;
         }
 
         do { //  iki koşula aynı anda bakmam da gerekiyor UNUTMA
-            if (100 < puan && puan < 200) {  // min değer koşulu  HATA VAR BURDA
-                minDeger = puan - 100;
-                randomSayi = (int) (Math.random() * (101 - minDeger) + minDeger);
-                System.out.println(randomSayi);
-            } else if (puan <= 100) { // max değer koşulu
-                maxDeger = puan - ((sayiAdedi - 1));
-                randomSayi = (int) (Math.random() * (maxDeger + 1));
-                System.out.println(randomSayi);
-            } else {  // sınır değerler yoksa 1-100 arası istedği sayıyı seçebilir
-                randomSayi = (int) (Math.random() * 101);
+            if (100 * (sayiAdedi - 1) < puan && puan <= sayiAdedi * 100) {  // min değer koşulu  HATAA
+                minDeger = puan - (100 * (sayiAdedi - 1));
             }
 
+            if (puan <= 100 + sayiAdedi - 1) { // max değer koşulu
+                maxDeger = puan - ((sayiAdedi - 1));
+            }
+
+            randomSayi = (int) (Math.random() * (maxDeger - minDeger + 1) + minDeger);  // min max arası üretilecek sayı
+            System.out.println(randomSayi);
+
+            sayilarinToplami += randomSayi;
             puan -= randomSayi;
             sayiAdedi--;
+            minDeger = 0;
+            maxDeger = 100;
 
         } while (sayiAdedi != 1);
-        System.out.print(puan);
+        System.out.println(puan);
+        System.out.println("TOPLAM : " + (sayilarinToplami + puan));
     }
 }
