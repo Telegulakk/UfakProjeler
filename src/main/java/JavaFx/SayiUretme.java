@@ -8,10 +8,56 @@ public class SayiUretme {
     Scanner scanner = new Scanner(System.in);
 
     public void randomSayilarUret() {
-        System.out.println("istenen ortalamayı belirtin");
-        int hedefOrt = scanner.nextInt();   // istenilen ortalama
-        System.out.println("kaç sayı olacak ?");
-        int sayiAdedi = scanner.nextInt();  // kullanılacak sayı adedi
+
+        int hedefOrt;
+        int sayiAdedi;
+
+        do {
+            System.out.print("1-100 arasında istenen ortalamayı belirtin: ");
+            String input = scanner.nextLine().trim(); // trim() boşlukları temizler
+
+            if (input.isEmpty()) {
+                System.out.println("Boş giriş yapılamaz!");
+                continue;
+            }
+
+            if (input.matches("\\d+")) {  // sadece rakamlardan oluşmalı
+                hedefOrt = Integer.parseInt(input);
+
+                if (hedefOrt >= 1 && hedefOrt <= 100) {
+                    break;
+                } else {
+                    System.out.println("Geçersiz giriş!");
+                }
+            } else {
+                System.out.println("Geçersiz giriş!");
+            }
+
+        } while (true);
+
+        do {
+            System.out.print("İstenilen Sayı Adedini Giriniz");
+            String input = scanner.nextLine().trim(); // boşlukları temizle
+
+            if (input.isEmpty()) {
+                System.out.println("Boş giriş yapılamaz!");
+                continue;
+            }
+
+            if (input.matches("\\d+")) { // sadece rakamlardan oluşmalı
+                sayiAdedi = Integer.parseInt(input);
+
+                if (sayiAdedi > 0) {
+                    break;
+                } else {
+                    System.out.println("Geçersiz giriş!");
+                }
+            } else {
+                System.out.println("Geçersiz giriş!");
+            }
+
+        } while (true);
+
         scanner.close();
 
         int randomSayi;  // o anlık üretilecek random sayımız
