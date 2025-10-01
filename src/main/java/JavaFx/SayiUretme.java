@@ -17,22 +17,14 @@ public class SayiUretme {
         int randomSayi;  // o anlık üretilecek random sayımız
         int minDeger = 1;
         int maxDeger = 100;
-        int puan = sayiAdedi * hedefOrt; // sayıların olması gerekn toplam değeri
+        int puan = sayiAdedi * hedefOrt; // sayıların toplam değeri. Amaç son sayı ile bunu sıfıra indirebilmek
         int sayilarinToplami = 0;
 
         System.out.println("ORTLAMA : " + hedefOrt);
         System.out.println("Sayı Adedi : " + sayiAdedi);
 
-        if (hedefOrt == 100 || hedefOrt == 0) { // uç değerler neyse o kadar sayı üretecek
-            for (int i = 0; i < sayiAdedi; i++) {
-                System.out.print(hedefOrt + " ");
-            }
-            System.out.println("TOPLAM : " + (puan));
-            return;
-        }
-
         do { //  iki koşula aynı anda bakmam da gerekiyor UNUTMA
-            if (100 * (sayiAdedi - 1) < puan && puan <= sayiAdedi * 100) {  // min değer koşulu  HATAA
+            if (100 * (sayiAdedi - 1) < puan && puan <= sayiAdedi * 100) {  // min değer koşulu
                 minDeger = puan - (100 * (sayiAdedi - 1));
             }
 
@@ -40,17 +32,18 @@ public class SayiUretme {
                 maxDeger = puan - ((sayiAdedi - 1));
             }
 
-            randomSayi = (int) (Math.random() * (maxDeger - minDeger + 1) + minDeger);  // min max arası üretilecek sayı
+            randomSayi = (int) (Math.random() * (maxDeger - minDeger + 1) + minDeger);  // min ve  max arası üretilecek sayı aralığı
             System.out.println(randomSayi);
 
+            // bir sonraki tur için gerekli değişikler
             sayilarinToplami += randomSayi;
             puan -= randomSayi;
             sayiAdedi--;
-            minDeger = 0;
+            minDeger = 1;
             maxDeger = 100;
 
-        } while (sayiAdedi != 1);
+        } while (sayiAdedi != 1);  // son sayı için random sayı üretmek yerine puanı 0'a indirecek o değeri yazarız ki ortalama tutsun
         System.out.println(puan);
-        System.out.println("TOPLAM : " + (sayilarinToplami + puan));
+        System.out.println("ÜRETİLEN SAYILARIN TOPLAMI : " + (sayilarinToplami + puan)); // toplamlarının ortalama x sayı adedine eşit olduğunu kontrol etmen için
     }
 }
