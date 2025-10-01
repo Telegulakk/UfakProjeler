@@ -1,5 +1,8 @@
 package JavaFx;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 // seçtiğimiz ortalamaya göre random sayı üreten uygulama
@@ -7,11 +10,8 @@ import java.util.Scanner;
 public class SayiUretme {
     Scanner scanner = new Scanner(System.in);
 
-    public void randomSayilarUret() {
-
+    private int kullanicidanOrtalamaAl() {
         int hedefOrt;
-        int sayiAdedi;
-
         do {
             System.out.print("1-100 arasında istenen ortalamayı belirtin: ");
             String input = scanner.nextLine().trim(); // trim() boşlukları temizler
@@ -34,7 +34,11 @@ public class SayiUretme {
             }
 
         } while (true);
+        return hedefOrt;
+    }
 
+    private int kullanicidanSayiAdediAl() {
+        int sayiAdedi;
         do {
             System.out.print("İstenilen Sayı Adedini Giriniz");
             String input = scanner.nextLine().trim(); // boşlukları temizle
@@ -57,39 +61,48 @@ public class SayiUretme {
             }
 
         } while (true);
+        return sayiAdedi;
+    }
 
-        scanner.close();
-
-        int randomSayi;  // o anlık üretilecek random sayımız
+    public List<Integer> sayilariUret() {
+        List<Integer> sayilar = new ArrayList<>();
+        int hedefOrt = kullanicidanOrtalamaAl();   // private metodlara bu şekilde eriştik
+        int sayiAdedi = kullanicidanSayiAdediAl();
         int minDeger = 1;
         int maxDeger = 100;
-        int puan = sayiAdedi * hedefOrt; // sayıların toplam değeri. Amaç son sayı ile bunu sıfıra indirebilmek
-        int sayilarinToplami = 0;
+        int puan = sayiAdedi * hedefOrt;
 
-        System.out.println("ORTLAMA : " + hedefOrt);
-        System.out.println("Sayı Adedi : " + sayiAdedi);
-
-        do { //  iki koşula aynı anda bakmam da gerekiyor UNUTMA
+        while (sayiAdedi > 1) {
             if (100 * (sayiAdedi - 1) < puan && puan <= sayiAdedi * 100) {  // min değer koşulu
                 minDeger = puan - (100 * (sayiAdedi - 1));
             }
 
-            if (puan <= 100 + sayiAdedi - 1) { // max değer koşulu
-                maxDeger = puan - ((sayiAdedi - 1));
+            if (puan <= 100 + sayiAdedi - 1) {   // max değer koşulu
+                maxDeger = puan - (sayiAdedi - 1);
             }
 
-            randomSayi = (int) (Math.random() * (maxDeger - minDeger + 1) + minDeger);  // min ve  max arası üretilecek sayı aralığı
-            System.out.println(randomSayi);
+            int randomSayi = (int) (Math.random() * (maxDeger - minDeger + 1) + minDeger);
+            sayilar.add(randomSayi); // sayılar Liste ekleniyor. En son Listi direkt yazdırıcaz
 
-            // bir sonraki tur için gerekli değişikler
-            sayilarinToplami += randomSayi;
             puan -= randomSayi;
             sayiAdedi--;
+
             minDeger = 1;
             maxDeger = 100;
+        }
+        // Son sayı (puanı sıfıra indirecek olan)
+        sayilar.add(puan);
 
-        } while (sayiAdedi != 1);  // son sayı için random sayı üretmek yerine puanı 0'a indirecek o değeri yazarız ki ortalama tutsun
-        System.out.println(puan);
-        System.out.println("ÜRETİLEN SAYILARIN TOPLAMI : " + (sayilarinToplami + puan)); // toplamlarının ortalama x sayı adedine eşit olduğunu kontrol etmen için
+        return sayilar;
+    }
+
+    public void sonucuYazdir(List<Integer> sayilar) {
+        Collections.shuffle(sayilar); // Sayıları Karıştırdık
+        System.out.println("Üretilen sayılar: ");
+        System.out.print(sayilar + ", ");
+        int toplam = 0;
+        for (int s : sayilar) toplam += s;
+        System.out.println("Toplam: " + toplam);
+        System.out.println("Ortalama: " + (toplam / sayilar.size()));
     }
 }
