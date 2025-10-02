@@ -5,8 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-// seçtiğimiz ortalamaya göre random sayı üreten uygulama
-// sayılar 1-100 arası ikisi de dahil olmak üsere üretilecek
+// seçtiğimiz ortalamaya ve adede uygun şekilde 1-100 arası random sayılar üreten uygulama
 public class SayiUretme {
     Scanner scanner = new Scanner(System.in);
 
@@ -102,7 +101,14 @@ public class SayiUretme {
         System.out.print(sayilar + ", ");
         int toplam = 0;
         for (int s : sayilar) toplam += s;
+        System.out.println();
         System.out.println("Toplam: " + toplam);
         System.out.println("Ortalama: " + (toplam / sayilar.size()));
     }
+
+    public static void main(String[] args) {
+        SayiUretme s = new SayiUretme();
+        s.sonucuYazdir(s.sayilariUret());
+    }
+
 }
