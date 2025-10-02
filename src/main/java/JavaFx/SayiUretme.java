@@ -110,5 +110,4 @@ public class SayiUretme {
         SayiUretme s = new SayiUretme();
         s.sonucuYazdir(s.sayilariUret());
     }
-
 }
